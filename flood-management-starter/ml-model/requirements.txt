@@ -1,0 +1,12 @@
+# Pydantic 2.10 pins pydantic-core 2.27.x, which has no prebuilt wheel for Python 3.14 on Windows
+# (pip tries to compile Rust → fails). Use pydantic >=2.12 so a newer pydantic-core with cp314 wheels is installed.
+fastapi>=0.115.0,<0.117.0
+uvicorn[standard]>=0.32.0,<0.35.0
+pydantic>=2.12.0,<3
+pydantic-settings>=2.7.0,<3
+numpy>=1.26.0,<3
+pandas>=2.1.0,<3
+scikit-learn>=1.4.0,<2
+xgboost>=2.0.0,<3
+joblib>=1.4.0,<2
+python-multipart>=0.0.9,<0.1.0

@@ -1,0 +1,12 @@
+node_modules/
+**/node_modules/
+**/.venv/
+**/venv/
+**/.parcel-cache/
+**/dist/
+**/.env
+**/models/*.joblib
+**/models/*.keras
+**/models/training_metadata.json
+__pycache__/
+*.pyc
