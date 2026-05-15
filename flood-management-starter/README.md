@@ -126,12 +126,73 @@ npm run start
 
 Open `http://localhost:3000`. The UI polls **`/api/dashboard`** (which runs the **live rainfall / water-level simulator** and returns zones), supports **Recompute risk (ML)** via **`POST /api/zones/recompute`**, **safe route** vs **OSRM** comparison, **heatmap**, **DANGER** banner + optional **browser notifications**, and **analytics** charts. The sidebar includes **Problem statement**, **Future scope** (explicitly **no blockchain**), and a **System overview** modal fed by **`GET /api/system`**.
 
-## 5. Optional bonuses
+### Frontend not loading? Try a private window
+
+If the page stays blank, shows a stale build, or fails after code changes:
+
+1. Confirm the dev server is running (`npm run start` in `frontend/`) and the terminal shows **Parcel** ready on port **3000**.
+2. Confirm `frontend/.env` has `API_BASE=http://localhost:4000/api` and the **backend** is running on port **4000**.
+3. Open **`http://localhost:3000`** in a **private / incognito** window (Chrome: `Ctrl+Shift+N`, Edge: `Ctrl+Shift+N`, Firefox: `Ctrl+Shift+P`). Private mode disables most extensions and avoids cached assets that can break Parcel during development.
+4. Hard-refresh in a normal window: `Ctrl+Shift+R` (Windows) or clear site data for `localhost`.
+5. Stop Parcel, delete `frontend/.parcel-cache` if present, then run `npm run start` again.
+
+## 5. Upload to GitHub
+
+Use these steps the first time you publish this project (or when pushing updates).
+
+### One-time setup
+
+1. **Install Git** — [git-scm.com](https://git-scm.com/download/win).
+2. **Create a GitHub account** — [github.com](https://github.com) if you do not have one.
+3. **Create a new repository** on GitHub:
+   - Click **+** → **New repository**
+   - Name it (e.g. `flood-management-dashboard`)
+   - Leave it **Public** or **Private** as you prefer
+   - Do **not** add a README, `.gitignore`, or license if this folder already has them (avoids merge conflicts)
+
+### Push from your PC (PowerShell)
+
+From the project root (`flood-management-starter/`):
+
+```powershell
+# If this folder is not a git repo yet:
+git init
+git branch -M main
+
+# Stage and commit (skip if already committed and clean)
+git add .
+git commit -m "Initial commit: flood monitoring dashboard"
+
+# Link your GitHub repo (replace USER and REPO with yours)
+git remote add origin https://github.com/USER/REPO.git
+
+# Push
+git push -u origin main
+```
+
+If `origin` already exists (this repo is wired to `Mahvish273303/flood-management-dashboard`), push updates with:
+
+```powershell
+git add .
+git commit -m "Describe your changes"
+git push
+```
+
+### Authentication
+
+- **HTTPS**: GitHub may ask you to sign in. Use a [Personal Access Token](https://github.com/settings/tokens) as the password (not your GitHub account password).
+- **SSH** (optional): add an SSH key in GitHub **Settings → SSH keys**, then use `git@github.com:USER/REPO.git` as the remote URL.
+
+### What should not be uploaded
+
+`.gitignore` already excludes `node_modules/`, `.env`, Python `.venv/`, Parcel cache, and trained model binaries. Never commit secrets (MongoDB passwords, API keys). Copy `.env.example` to `.env` locally only.
+
+## 6. Optional bonuses
 
 - **LSTM**: install TensorFlow extras, train `scripts/train_lstm.py`, restart FastAPI.
 - **Firebase push**: install `firebase`, expose `window.__FIREBASE_CONFIG__`, call `initializeFirebaseMessaging()` from `src/firebaseNotifications.js` after a click handler.
 
-## 6. Production notes
+## 7. Production notes
 
 - Put **TLS** reverse proxy (nginx, Caddy, cloud LB) in front of Node + FastAPI.
 - Lock down **CORS** to your real web origin.
